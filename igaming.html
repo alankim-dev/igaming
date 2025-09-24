@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGaming 산업 심화 가이드 | NSUSLAB KOREA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutrals with Tech Blue Accent -->
+    <!-- Application Structure Plan: The single-page dashboard structure is retained for its non-linear exploration benefits. Users can now access deeper insights within each section. The "Overview" now includes a historical context. The "Market" section adds more textual analysis on growth drivers. "Verticals" introduces a new tab for "Live Casino" and expands on game types. "Tech" adds a new card for "Compliance & Regulation". The "Ecosystem" diagram is enhanced with more detailed role descriptions and new players (payment providers, affiliates), making it a comprehensive business model explainer. The interactive elements (tabs, chart clicks) are now linked to richer, more detailed content. -->
+    <!-- Visualization & Content Choices: 
+        1. Global Market Size & Growth Drivers -> Goal: Show growth trend and its causes -> Viz: Bar Chart (Chart.js) + Detailed text blocks -> Interaction: Hover for data, read accompanying text for context -> Justification: The combination of visualization and text provides both a quick overview and deep contextual understanding.
+        2. Market Segments -> Goal: Compare proportions and explain sub-segments -> Viz: Donut Chart (Chart.js) + Clickable descriptions -> Interaction: Click on segment to update a rich description panel with more sub-vertical details -> Justification: Allows users to drill down from a high-level view to specific content seamlessly.
+        3. iGaming Verticals -> Goal: Organize diverse game types in-depth -> Presentation: Enhanced tabbed interface -> Interaction: Click tabs to reveal rich content for each vertical, including sub-game types and characteristics -> Justification: Organizes a large volume of detailed information cleanly.
+        4. Industry Ecosystem -> Goal: Explain complex value chain relationships -> Presentation: Interactive diagram using HTML/CSS/JS -> Interaction: Click on each entity (B2B, B2C, Affiliates, etc.) to highlight and show a comprehensive description of their role and relationships -> Justification: Best for visualizing a complex network of players.
+        5. Core Technologies -> Goal: Inform about key technological and business trends -> Presentation: Expanded interactive cards -> Interaction: Hover to reveal more in-depth information -> Justification: Provides a scannable and digestible overview of multiple, distinct topics. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 450px;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .ecosystem-node.active {
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                <span class="text-blue-600">iGaming</span> Industry Guide
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link text-gray-600 border-b-2 border-transparent pb-1">개요</a>
+                <a href="#market" class="nav-link text-gray-600 border-b-2 border-transparent pb-1">시장 현황</a>
+                <a href="#verticals" class="nav-link text-gray-600 border-b-2 border-transparent pb-1">게임 종류</a>
+                <a href="#tech" class="nav-link text-gray-600 border-b-2 border-transparent pb-1">핵심 기술</a>
+                <a href="#ecosystem" class="nav-link text-gray-600 border-b-2 border-transparent pb-1">생태계</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <section id="overview" class="text-center mb-20 pt-16">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">iGaming 산업, 무엇일까요?</h1>
+            <p class="text-xl text-gray-600 max-w-4xl mx-auto">
+                iGaming은 온라인 베팅 및 게임을 포괄하는 용어로, 디지털 엔터테인먼트의 핵심 산업입니다. 1990년대 중반, 첫 번째 온라인 카지노가 등장하며 산업의 막을 올렸고, 2000년대 이후 광대역 인터넷과 모바일 기술의 발전으로 폭발적인 성장을 거듭했습니다. 특히 2020년 이후 코로나19 팬데믹은 iGaming 시장의 디지털 전환을 가속화시키는 중요한 변곡점이 되었습니다.
+            </p>
+        </section>
+
+        <section id="market" class="mb-20 pt-16">
+            <h2 class="text-4xl font-bold text-center mb-2">시장 현황 및 성장 동력</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-12">
+                iGaming 시장은 꾸준한 성장을 기록하고 있으며, 2027년까지 1,300억 달러 규모를 넘어설 것으로 예상됩니다. 이러한 성장은 <span class="font-bold text-blue-600">모바일 기기 확산</span>, <span class="font-bold text-blue-600">인터넷 접근성 증가</span>, <span class="font-bold text-blue-600">기술 혁신</span>, 그리고 전 세계적인 <span class="font-bold text-blue-600">합법화 추세</span>에 힘입고 있습니다.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-3 section-card p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">글로벌 iGaming 시장 규모 (단위: 10억 달러)</h3>
+                    <div class="chart-container h-[45vh] max-h-[500px]">
+                        <canvas id="marketSizeChart"></canvas>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 section-card p-6 flex flex-col justify-center">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">주요 게임 부문별 시장 점유율 (2025년 예상)</h3>
+                    <div class="chart-container h-[35vh] max-h-[350px] mx-auto" style="max-width: 400px;">
+                        <canvas id="marketSegmentsChart"></canvas>
+                    </div>
+                    <div id="segment-info" class="mt-6 p-4 bg-gray-100 rounded-lg min-h-[120px]">
+                        <p class="text-gray-700">차트의 각 부분을 클릭하여 상세 설명을 확인하세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="verticals" class="mb-20 pt-16">
+            <h2 class="text-4xl font-bold text-center mb-2">The World of iGaming</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-12">iGaming 산업은 다양한 게임 종류(Verticals)로 구성됩니다. 각 탭을 클릭하여 해당 분야의 특징과 주요 게임을 자세히 알아볼 수 있습니다.</p>
+
+            <div class="section-card p-6 sm:p-8">
+                <div class="mb-6 border-b border-gray-200">
+                    <div class="flex flex-wrap -mb-px" id="verticals-tabs">
+                        <button class="tab-button active text-lg font-semibold px-6 py-3 border-b-2 border-transparent rounded-t-lg" data-target="casino">온라인 카지노</button>
+                        <button class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent rounded-t-lg" data-target="live-casino">라이브 카지노</button>
+                        <button class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent rounded-t-lg" data-target="sports">스포츠 베팅</button>
+                        <button class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent rounded-t-lg" data-target="poker">온라인 포커</button>
+                        <button class="tab-button text-lg font-semibold px-6 py-3 border-b-2 border-transparent rounded-t-lg" data-target="etc">기타 게임</button>
+                    </div>
+                </div>
+                <div id="verticals-content">
+                    <div class="tab-content" id="casino-content">
+                        <h3 class="text-2xl font-bold text-blue-600 mb-3">온라인 카지노 (Online Casino)</h3>
+                        <p class="text-gray-700 mb-4">iGaming 산업의 가장 큰 부분을 차지하는 핵심 분야입니다. RNG(난수 생성기) 기술을 기반으로 공정성을 보장하며, 정교한 게임 디자인과 화려한 테마로 사용자의 몰입감을 높입니다.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                            <li><strong>슬롯(Slots):</strong> 수백, 수천 개의 다양한 테마와 페이라인을 가진 게임으로, 잭팟의 규모에 따라 프로그레시브 잭팟, 고정 잭팟 등으로 나뉩니다.</li>
+                            <li><strong>테이블 게임(Table Games):</strong> 블랙잭, 룰렛, 바카라, 크랩스 등 전통적인 카지노 게임을 디지털화한 버전입니다.</li>
+                        </ul>
+                    </div>
+                    <div class="tab-content hidden" id="live-casino-content">
+                        <h3 class="text-2xl font-bold text-green-600 mb-3">라이브 카지노 (Live Casino)</h3>
+                        <p class="text-gray-700 mb-4">온라인의 편리함과 실제 카지노의 현장감을 결합한 가장 빠르게 성장하는 분야입니다. 실제 딜러가 진행하는 게임이 실시간으로 스트리밍되며, 채팅 기능으로 딜러 및 다른 플레이어와 소통할 수 있습니다. <br>기술적으로는 고화질 비디오 스트리밍, OCR(광학 문자 인식) 기술 등이 필수적입니다.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                            <li><strong>주요 게임:</strong> 라이브 바카라, 라이브 블랙잭, 라이브 룰렛, 라이브 포커</li>
+                            <li><strong>특징:</strong> 높은 신뢰성, 뛰어난 현장감, 사용자 소통 기능</li>
+                        </ul>
+                    </div>
+                    <div class="tab-content hidden" id="sports-content">
+                        <h3 class="text-2xl font-bold text-red-600 mb-3">스포츠 베팅 (Sports Betting)</h3>
+                        <p class="text-gray-700 mb-4">전 세계 다양한 스포츠 경기의 결과를 예측하고 베팅합니다. 경기가 진행되는 동안 실시간으로 베팅하는 <span class="font-bold">인플레이(In-play) 베팅</span>이 시장 성장을 주도하고 있습니다. 최근에는 <span class="font-bold">e스포츠</span> 베팅이 새로운 성장 동력으로 부상하고 있습니다.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                            <li><strong>종목:</strong> 축구, 농구, 야구, 테니스 등 전통 스포츠와 리그 오브 레전드, 도타 2 등 e스포츠</li>
+                            <li><strong>특징:</strong> 실시간 데이터 연동, 배당률 변동성, 팬덤 기반의 높은 참여율</li>
+                        </ul>
+                    </div>
+                    <div class="tab-content hidden" id="poker-content">
+                        <h3 class="text-2xl font-bold text-purple-600 mb-3">온라인 포커 (Online Poker)</h3>
+                        <p class="text-gray-700 mb-4">전 세계 플레이어들과 실시간으로 경쟁하며 전략과 심리전이 중요한 게임입니다. <span class="font-bold">멀티 테이블 토너먼트(MTT)</span>나 <span class="font-bold">싯앤고(Sit & Go)</span> 같은 다양한 토너먼트 형식과 <span class="font-bold">캐시 게임(Cash Game)</span>을 즐길 수 있습니다.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                            <li><strong>주요 게임:</strong> 텍사스 홀덤, 오마하</li>
+                            <li><strong>특징:</strong> 플레이어 대 플레이어(PvP) 경쟁, 기술과 전략의 중요성, 대규모 상금 토너먼트</li>
+                        </ul>
+                    </div>
+                    <div class="tab-content hidden" id="etc-content">
+                        <h3 class="text-2xl font-bold text-yellow-600 mb-3">기타 게임 (Lottery, Bingo, etc.)</h3>
+                        <p class="text-gray-700 mb-4">전통적인 복권과 빙고를 온라인으로 옮겨온 형태로, 간단한 규칙과 낮은 진입 장벽이 특징입니다. 소셜 기능이 강화되어 커뮤니티를 형성하며 즐기는 사용자가 많습니다.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                            <li><strong>주요 게임:</strong> 온라인 복권, 온라인 빙고, 소셜 카지노</li>
+                            <li><strong>특징:</strong> 간단한 규칙, 소셜 및 커뮤니티 기능, 낮은 진입 장벽</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tech" class="mb-20 pt-16">
+            <h2 class="text-4xl font-bold text-center mb-2">핵심 기술과 미래 트렌드</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-12">iGaming 산업은 최신 기술을 가장 빠르게 흡수하며 발전하고 있습니다. 현재와 미래를 이끌어갈 핵심 기술 트렌드를 확인해보세요.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="section-card p-6 group">
+                    <h3 class="text-2xl font-semibold mb-3">모바일 퍼스트</h3>
+                    <p class="text-gray-600">모바일 기기 보급과 함께 언제 어디서나 게임을 즐기는 것이 표준이 되었습니다. 모바일 전용 UI/UX 디자인, 최적화된 앱 개발, 반응형 웹사이트 구축은 필수적입니다.</p>
+                </div>
+                <div class="section-card p-6 group">
+                    <h3 class="text-2xl font-semibold mb-3">라이브 딜러 기술</h3>
+                    <p class="text-gray-600">고화질 스트리밍, 낮은 지연 시간(Low-latency), OCR 기술 등을 통해 실제 딜러와 상호작용하며 현장감 있는 게임을 즐길 수 있습니다. 사용자에게 높은 신뢰성을 제공하는 핵심 기술입니다.</p>
+                </div>
+                <div class="section-card p-6 group">
+                    <h3 class="text-2xl font-semibold mb-3">AI & 머신러닝</h3>
+                    <p class="text-gray-600">개인화된 게임 추천, 부정행위 탐지 및 방지, 책임감 있는 게이밍 문제 감지, 고객 서비스 자동화 등에 활용되어 산업의 효율성을 높이고 사용자 경험을 개선합니다.</p>
+                </div>
+                <div class="section-card p-6 group">
+                    <h3 class="text-2xl font-semibold mb-3">블록체인 & 암호화폐</h3>
+                    <p class="text-gray-600">암호화폐를 통한 빠른 입출금, 블록체인의 분산원장을 활용한 'Provably Fair(입증 가능한 공정성)' 게임 구현 등으로 투명성과 신뢰성을 높이고 있습니다.</p>
+                </div>
+                <div class="section-card p-6 group">
+                    <h3 class="text-2xl font-semibold mb-3">VR & AR</h3>
+                    <p class="text-gray-600">가상현실(VR)과 증강현실(AR) 기술은 궁극의 몰입감을 제공할 미래 기술로 주목받고 있습니다. 가상 카지노 환경에서 다른 플레이어와 소통하며 게임을 즐기는 새로운 경험을 창출할 것입니다.</p>
+                </div>
+                <div class="section-card p-6 group">
+                    <h3 class="text-2xl font-semibold mb-3">컴플라이언스 & 라이선싱</h3>
+                    <p class="text-gray-600">각 국가별 엄격한 규제와 법률을 준수하는 것은 사업의 핵심입니다. 기술적으로는 AML(자금 세탁 방지) 시스템, KYC(고객 신원 확인) 절차, 데이터 보안 시스템 등이 매우 중요합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecosystem" class="pt-16">
+            <h2 class="text-4xl font-bold text-center mb-2">iGaming 생태계와 비즈니스 모델</h2>
+            <p class="text-lg text-gray-600 text-center max-w-4xl mx-auto mb-12">iGaming 산업은 여러 플레이어들이 유기적으로 연결된 생태계입니다. 각 주체의 역할과 관계를 통해 NSUSLAB KOREA가 기여하는 부분을 깊이 이해할 수 있습니다.</p>
+            <div class="section-card p-8">
+                <div class="flex flex-col md:flex-row justify-around items-center gap-8 text-center">
+                    <div class="ecosystem-node p-6 border-2 rounded-lg w-full md:w-1/4 cursor-pointer active" data-info="b2b-info">
+                        <h3 class="text-2xl font-bold text-blue-600">B2B 공급사</h3>
+                        <p class="mt-2 text-gray-600 font-semibold">게임 스튜디오, 플랫폼 제공사</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-400 my-4 md:my-0">&rarr;</div>
+                    <div class="ecosystem-node p-6 border-2 rounded-lg w-full md:w-1/4 cursor-pointer" data-info="b2c-info">
+                        <h3 class="text-2xl font-bold text-gray-700">B2C 운영사</h3>
+                        <p class="mt-2 text-gray-600 font-semibold">웹사이트/앱 운영자</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-400 my-4 md:my-0">&larr;</div>
+                    <div class="ecosystem-node p-6 border-2 rounded-lg w-full md:w-1/4 cursor-pointer" data-info="affiliates-info">
+                        <h3 class="text-2xl font-bold text-gray-700">제휴 마케팅</h3>
+                        <p class="mt-2 text-gray-600 font-semibold">Affiliates</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-400 my-4 md:my-0">&larr;</div>
+                    <div class="ecosystem-node p-6 border-2 rounded-lg w-full md:w-1/4 cursor-pointer" data-info="payment-info">
+                        <h3 class="text-2xl font-bold text-gray-700">결제 솔루션</h3>
+                        <p class="mt-2 text-gray-600 font-semibold">Payment Providers</p>
+                    </div>
+                    <div class="text-4xl font-bold text-gray-400 my-4 md:my-0">&rarr;</div>
+                    <div class="ecosystem-node p-6 border-2 rounded-lg w-full md:w-1/4 cursor-pointer" data-info="player-info">
+                        <h3 class="text-2xl font-bold text-gray-700">플레이어</h3>
+                        <p class="mt-2 text-gray-600 font-semibold">최종 사용자</p>
+                    </div>
+                </div>
+                <div id="ecosystem-info" class="mt-8 p-6 bg-gray-100 rounded-lg min-h-[160px]">
+                    <div id="b2b-info-content" class="info-content">
+                        <h4 class="font-bold text-lg mb-2 text-blue-600">B2B 공급사 (Software Provider)</h4>
+                        <p class="text-gray-700">게임 소프트웨어, 플랫폼, 라이브 딜러 스튜디오 등을 개발하여 B2C 운영사에 제공합니다. NSUSLAB KOREA는 이 핵심적인 역할을 맡고 있습니다. 혁신적인 게임 개발, 안정적인 플랫폼 구축, 공정한 게임을 위한 RNG(난수 생성기) 인증 획득 등이 주요 업무입니다.</p>
+                    </div>
+                    <div id="b2c-info-content" class="info-content hidden">
+                        <h4 class="font-bold text-lg mb-2 text-gray-700">B2C 운영사 (Operator)</h4>
+                        <p class="text-gray-700">B2B 공급사의 게임을 받아 실제 게이밍 웹사이트나 앱을 운영합니다. 마케팅, 고객 지원, 결제 솔루션 통합, 사용자 데이터 분석을 통해 수익을 창출합니다. 규제 기관의 라이선스를 획득하고 준수하는 것이 매우 중요합니다.</p>
+                    </div>
+                    <div id="affiliates-info-content" class="info-content hidden">
+                        <h4 class="font-bold text-lg mb-2 text-gray-700">제휴 마케팅 (Affiliates)</h4>
+                        <p class="text-gray-700">자신의 웹사이트나 채널을 통해 B2C 운영사의 서비스를 홍보하고, 유입된 플레이어 수에 따라 수익을 배분받습니다. iGaming 산업의 주요 마케팅 채널 중 하나입니다.</p>
+                    </div>
+                    <div id="payment-info-content" class="info-content hidden">
+                        <h4 class="font-bold text-lg mb-2 text-gray-700">결제 솔루션 (Payment Providers)</h4>
+                        <p class="text-gray-700">플레이어의 입출금을 안전하고 빠르게 처리하는 역할을 합니다. 신용카드, 전자지갑, 암호화폐 등 다양한 결제 수단을 제공하며, 보안과 속도가 핵심 경쟁력입니다.</p>
+                    </div>
+                    <div id="player-info-content" class="info-content hidden">
+                        <h4 class="font-bold text-lg mb-2 text-gray-700">플레이어 (Player / End-User)</h4>
+                        <p class="text-gray-700">온라인으로 게임을 즐기는 최종 사용자입니다. 이들은 재미, 공정성, 보안, 다양한 게임 종류, 그리고 신속한 서비스 등을 중요하게 생각합니다. 산업의 모든 활동은 궁극적으로 플레이어의 만족을 목표로 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-20">
+        <p>&copy; 2025 NSUSLAB KOREA. All Rights Reserved.</p>
+        <p class="text-sm text-gray-400 mt-2">이 문서는 NSUSLAB KOREA 구성원의 내부 교육 목적으로 제작되었습니다.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const marketSizeData = {
+                labels: ['2022', '2023', '2024', '2025(E)', '2026(E)', '2027(E)'],
+                datasets: [{
+                    label: '시장 규모 (10억$)',
+                    data: [81.0, 88.5, 95.1, 102.8, 115.4, 130.9],
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    barPercentage: 0.6,
+                }]
+            };
+
+            const marketSizeConfig = {
+                type: 'bar',
+                data: marketSizeData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` 시장 규모: $${context.parsed.y} Billion`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value + 'B';
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const marketSizeCtx = document.getElementById('marketSizeChart').getContext('2d');
+            new Chart(marketSizeCtx, marketSizeConfig);
+
+            const segmentData = {
+                labels: ['온라인 카지노', '스포츠 베팅', '온라인 포커', '기타'],
+                datasets: [{
+                    label: '시장 점유율',
+                    data: [45, 35, 12, 8],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(139, 92, 246, 0.8)'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            };
+            
+            const segmentDescriptions = {
+                '온라인 카지노': '<strong>온라인 카지노:</strong> 슬롯, 테이블 게임 등 다양한 디지털 카지노 게임을 포함하며, 시장에서 가장 큰 비중을 차지합니다. 기술 혁신과 라이브 딜러 게임의 인기가 성장을 견인하고 있습니다.',
+                '스포츠 베팅': '<strong>스포츠 베팅:</strong> 전 세계 스포츠 팬덤을 기반으로 빠르게 성장하고 있는 분야입니다. 특히 경기 중 실시간으로 베팅하는 라이브 베팅의 인기가 높습니다.',
+                '온라인 포커': '<strong>온라인 포커:</strong> 전 세계 유저들과의 실시간 경쟁을 특징으로 하는, 전략과 기술이 중요한 게임입니다. 대규모 토너먼트가 주요 콘텐츠입니다.',
+                '기타': '<strong>기타:</strong> 온라인 복권, 빙고, 소셜 카지노 등 다양한 틈새 시장을 포함합니다. 이들은 커뮤니티 기반의 가벼운 게임 경험을 제공합니다.'
+            };
+            
+            const segmentInfoEl = document.getElementById('segment-info');
+
+            const segmentConfig = {
+                type: 'doughnut',
+                data: segmentData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}: ${context.parsed}%`;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const chartElement = elements[0];
+                            const label = segmentData.labels[chartElement.index];
+                            segmentInfoEl.innerHTML = segmentDescriptions[label];
+                        }
+                    }
+                }
+            };
+            
+            const marketSegmentsCtx = document.getElementById('marketSegmentsChart').getContext('2d');
+            new Chart(marketSegmentsCtx, segmentConfig);
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const target = tab.getAttribute('data-target');
+                    contents.forEach(content => {
+                        if (content.id === `${target}-content`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const ecosystemNodes = document.querySelectorAll('.ecosystem-node');
+            const infoContents = document.querySelectorAll('.info-content');
+
+            ecosystemNodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    ecosystemNodes.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    node.classList.add('active');
+
+                    const targetInfo = node.getAttribute('data-info');
+                    infoContents.forEach(content => {
+                        if (content.id === `${targetInfo}-content`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
